@@ -2,6 +2,7 @@ import { Footer } from '@/modules/home/ui/components/footer';
 import { Navbar } from '@/modules/home/ui/components/navbar';
 import { SearchFilters } from '@/modules/home/ui/components/search-filters';
 import { Category } from '@/payload-types';
+import { CustomCategory } from '@/types';
 import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 
@@ -25,7 +26,7 @@ const Layout = async ({ children }: Props) => {
     },
   });
 
-  const formattedData = data.docs.map((doc) => ({
+  const formattedData: CustomCategory[] = data.docs.map((doc) => ({
     ...doc,
     subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
       ...(doc as Category),
