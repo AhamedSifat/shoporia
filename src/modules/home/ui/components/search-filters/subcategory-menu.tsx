@@ -1,8 +1,9 @@
 import { Category } from '@/payload-types';
+import { CustomCategory } from '@/types';
 import Link from 'next/link';
 
 interface Props {
-  category: Category;
+  category: CustomCategory;
   isOpen: boolean;
 }
 

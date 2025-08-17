@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ListFilterIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { CategoriesSidebar } from './categories-sidebar';
 
 interface Props {
   data: CustomCategory[];
@@ -59,6 +60,12 @@ export const Categories = ({ data }: Props) => {
 
   return (
     <div className='relative w-full'>
+      {/* Categories sidebar */}
+      <CategoriesSidebar
+        open={isSidebarOpen}
+        onOpenChange={setIsSidebarOpen}
+        data={data}
+      />
       {/* hide div to messure all items */}
       <div
         ref={messureRef}

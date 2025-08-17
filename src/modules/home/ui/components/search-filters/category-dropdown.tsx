@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useRef, useState } from 'react';
 import { SubcategoryMenu } from './subcategory-menu';
 import { CustomCategory } from '@/types';
+import Link from 'next/link';
 
 interface Props {
   category: CustomCategory;
@@ -44,7 +45,9 @@ export const CategoryDropdown = ({
           )}
           variant='elevated'
         >
-          {category.name}
+          <Link href={`/${category.slug === 'all' ? '' : category.slug}`}>
+            {category.name}
+          </Link>
         </Button>
         {category.subcategories && category.subcategories.length > 0 && (
           <div
