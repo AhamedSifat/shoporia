@@ -15,6 +15,25 @@ export const authRouter = createTRPCRouter({
   register: baseProcedure
     .input(registerSchema)
     .mutation(async ({ input, ctx }) => {
+      const existingData = await ctx.payload.find({
+        collection: 'users',
+        limit: 1,
+        where: {
+          username: {
+            equals: input.username,
+          },
+        },
+      });
+
+      const existingUser = existingData.docs[0];
+
+      if (existingUser) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'username already taken ',
+        });
+      }
+
       await ctx.payload.create({
         collection: 'users',
         data: {
