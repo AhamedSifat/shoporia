@@ -2,11 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ListFilterIcon, SearchIcon } from 'lucide-react';
+import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 import { CategoriesSidebar } from './categories-sidebar';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTRPC } from '@/trpc/client';
+import Link from 'next/link';
 
 interface Props {
   disabled?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 export const SearchInput = ({ disabled }: Props) => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+  const session = useSuspenseQuery(trpc.auth.session.queryOptions());
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <div className='flex items-center gap-2 w-full'>
@@ -38,6 +40,15 @@ export const SearchInput = ({ disabled }: Props) => {
       >
         <ListFilterIcon />
       </Button>
+
+      {session.data?.user && (
+        <Button asChild variant='elevated'>
+          <Link prefetch href='/library'>
+            <BookmarkCheckIcon />
+            Library
+          </Link>
+        </Button>
+      )}
     </div>
   );
 };
