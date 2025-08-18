@@ -1,6 +1,5 @@
 'use client';
 
-import { Category } from '@/payload-types';
 import { CategoryDropdown } from './category-dropdown';
 import { CustomCategory } from '@/types';
 import { useEffect, useRef, useState } from 'react';
@@ -8,9 +7,10 @@ import { ListFilterIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { CategoriesSidebar } from './categories-sidebar';
+import { CategoriesGetManyOutput } from '@/modules/categories/types';
 
 interface Props {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({ data }: Props) => {
@@ -72,7 +72,7 @@ export const Categories = ({ data }: Props) => {
         className='absolute opacity-0 pointer-events-none flex'
         style={{ position: 'fixed', top: -9999, left: -9999 }}
       >
-        {data.map((category: Category) => (
+        {data.map((category) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category as CustomCategory}
@@ -89,7 +89,7 @@ export const Categories = ({ data }: Props) => {
         onMouseLeave={() => setIsAnyHovered(false)}
         className='flex flex-nowrap items-center'
       >
-        {data.slice(0, visibleCount).map((category: Category) => (
+        {data.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category as CustomCategory}
