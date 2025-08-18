@@ -60,7 +60,7 @@ export const authRouter = createTRPCRouter({
 
       const cookies = await getCookies();
       cookies.set({
-        name: 'AUTH_COOKIE',
+        name: 'payload-token',
         value: data.token,
         httpOnly: true,
         path: '/',
@@ -87,7 +87,7 @@ export const authRouter = createTRPCRouter({
 
     const cookies = await getCookies();
     cookies.set({
-      name: 'AUTH_COOKIE',
+      name: 'payload-token',
       value: data.token,
       httpOnly: true,
       path: '/',
@@ -100,6 +100,6 @@ export const authRouter = createTRPCRouter({
 
   logout: baseProcedure.mutation(async () => {
     const cookies = await getCookies();
-    cookies.delete('AUTH_COOKIE');
+    cookies.delete('payload-token');
   }),
 });
