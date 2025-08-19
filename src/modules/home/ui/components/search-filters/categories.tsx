@@ -8,12 +8,14 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { CategoriesSidebar } from './categories-sidebar';
 import { CategoriesGetManyOutput } from '@/modules/categories/types';
+import { useParams } from 'next/navigation';
 
 interface Props {
   data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({ data }: Props) => {
+  const params = useParams();
   const containerRef = useRef<HTMLDivElement>(null);
   const messureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -22,7 +24,8 @@ export const Categories = ({ data }: Props) => {
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const activeCategory = 'all';
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || 'all';
 
   const activeCategoryIndex = data.findIndex(
     (cat) => cat.slug === activeCategory
