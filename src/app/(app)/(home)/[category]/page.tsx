@@ -8,14 +8,30 @@ interface Props {
   params: Promise<{
     category: string;
   }>;
+  searchParams: Promise<{
+    minPrice: string | undefined;
+    maxPrice: string | undefined;
+    [key: string]: string | undefined;
+  }>;
 }
 
-const Page = async ({ params }: Props) => {
+const Page = async ({ params, searchParams }: Props) => {
   const { category } = await params;
+  const { minPrice, maxPrice } = await searchParams;
+
   const queryClient = getQueryClient();
+
   void queryClient.prefetchQuery(
     trpc.products.getMany.queryOptions({
       category,
+      minPrice:
+        minPrice !== null && minPrice !== undefined && minPrice !== ''
+          ? Number(minPrice)
+          : undefined,
+      maxPrice:
+        maxPrice !== null && maxPrice !== undefined && maxPrice !== ''
+          ? Number(maxPrice)
+          : undefined,
     })
   );
   return (
